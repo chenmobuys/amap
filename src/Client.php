@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Chen\Amap\Kernel;
+namespace Chen\Amap;
 
-use Chen\Amap\Kernel\Application;
+use Chen\Amap\Application;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Client as HttpClient;
 use Psr\Http\Message\ResponseInterface;
 
-class Client
+abstract class Client
 {
     /**
      * @var Application
@@ -142,7 +142,7 @@ class Client
         } elseif ($content == '') {
 
             throw new \RuntimeException('Content is empty');
-            
+
         }
 
         return $content;

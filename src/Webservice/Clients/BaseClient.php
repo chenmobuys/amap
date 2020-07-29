@@ -2,7 +2,7 @@
 
 namespace Chen\Amap\Webservice\Clients;
 
-use Chen\Amap\Kernel\Client;
+use Chen\Amap\Client;
 
 class BaseClient extends Client
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Chen\Amap\Kernel;
+namespace Chen\Amap;
 
 use Pimple\Container;
 
@@ -8,7 +8,7 @@ use Pimple\Container;
  * Class Application
  * @package Chen\Amap\Kernel
  */
-class Application extends Container
+abstract class Application extends Container
 {
     /**
      * @var array

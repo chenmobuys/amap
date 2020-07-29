@@ -2,7 +2,7 @@
 
 namespace Chen\Amap\Track;
 
-use Chen\Amap\Kernel\Application as BaseApplication;
+use Chen\Amap\Application as BaseApplication;
 
 /**
  * Class Application

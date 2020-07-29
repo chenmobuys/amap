@@ -2,7 +2,7 @@
 
 namespace Chen\Amap\Track\Clients;
 
-use Chen\Amap\Kernel\Client;
+use Chen\Amap\Client;
 
 class TraceColumnClient extends Client
 {

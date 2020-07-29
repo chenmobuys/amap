@@ -31,7 +31,7 @@ class TrackApplicationTest extends TestCase
 
         $response = $app->service->create('foo');
         $this->assertV1Response($response);
-        $sid = $response['data']['sid'];
+        $sid = 'xxxx';
 
         $response = $app->service->update($sid, 'bar');
         $this->assertV1Response($response);
@@ -65,7 +65,7 @@ class TrackApplicationTest extends TestCase
 
         $response = $app->terminal->create($sid, 'foo');
         $this->assertV1Response($response);
-        $tid = $response['data']['tid'];
+        $tid = 'xxxx';
 
         $response = $app->terminal->update($sid, $tid, 'bar');
         $this->assertV1Response($response);
@@ -75,12 +75,12 @@ class TrackApplicationTest extends TestCase
 
         $response = $app->trace->create($sid, $tid);
         $this->assertV1Response($response);
-        $trid = $response['data']['trid'];
+        $trid = 'xxxx';
 
         // array( [errcode] => 20003 [errdetail] => 未知错误  [errmsg] => UNKNOWN_ERROR )
-        // $points = [["location" => "116.397428,39.90923", "locatetime" => 1544176895000, "speed" => 40, "direction" => 120, "height" => 39, "accuracy" => 20]];
-        // $response = $app->trace->pointUpload($sid, $tid, $trid, $points);
-        // $this->assertV1Response($response);
+        $points = [["location" => "116.397428,39.90923", "locatetime" => 1544176895000, "speed" => 40, "direction" => 120, "height" => 39, "accuracy" => 20]];
+        $response = $app->trace->pointUpload($sid, $tid, $trid, $points);
+        $this->assertV1Response($response);
 
         $response = $app->terminal_monitor->lastpoint($sid, $tid, $trid);
         $this->assertV1Response($response);

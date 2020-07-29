@@ -98,8 +98,8 @@ class WebserviceApplicationTest extends TestCase
         $this->assertV4Response($response);
 
         // 未知错误
-        // $response = $app->geofence->delete($gid);
-        // $this->assertV4Response($response);
+        $response = $app->geofence->delete($gid);
+        $this->assertV4Response($response);
     }
 
     /**
@@ -135,8 +135,8 @@ class WebserviceApplicationTest extends TestCase
         $this->assertV3Response($response);
 
         // 未知错误
-        // $response = $app->search->polygon('116.322056,39.89491');
-        // $this->assertV3Response($response);
+        $response = $app->search->polygon('116.322056,39.89491');
+        $this->assertV3Response($response);
 
         $response = $app->search->detail('B0FFFAB6J2');
         $this->assertV3Response($response);
