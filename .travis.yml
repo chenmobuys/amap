@@ -11,6 +11,6 @@ dist: trusty
 sudo: false
 
 install:
-  - composer install --prefer-dist --optimize-autoloader --no-interaction --prefer-source --quiet
+  - composer install --prefer-dist --optimize-autoloader --no-interaction --prefer-source
 
 script: ./vendor/bin/phpunit --verbose --coverage-text
