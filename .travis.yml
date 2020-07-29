@@ -10,6 +10,7 @@ php:
 dist: trusty
 sudo: false
 
-install: travis_retry composer install --no-interaction --prefer-source
+install:
+  - composer install --prefer-dist --optimize-autoloader --no-interaction --prefer-source --quiet
 
 script: ./vendor/bin/phpunit --verbose --coverage-text
