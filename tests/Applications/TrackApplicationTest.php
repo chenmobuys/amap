@@ -23,6 +23,12 @@ class TrackApplicationTest extends TestCase
      */
     public function all_clients(Application $app)
     {
+        $response = $app->service->search();
+        $services = (array)(isset($response['data']['results']) ? $response['data']['results'] : []);
+        foreach ($services as $service) {
+            $app->service->delete($service['sid']);
+        }
+
         $response = $app->service->create('foo');
         $this->assertV1Response($response);
         $sid = $response['data']['sid'];
@@ -90,25 +96,5 @@ class TrackApplicationTest extends TestCase
 
         $response = $app->service->delete($sid);
         $this->assertV1Response($response);
-    }
-
-    protected function tearDown()
-    {
-        $app = Factory::track($this->getConfig());
-        $response = $app->service->search();
-        $services = (array)(isset($response['data']['results']) ? $response['data']['results'] : []);
-
-        foreach ($services as $service) {
-
-            $response = $app->terminal->search($service['sid']);
-            $terminals = (array)(isset($response['data']['results']) ? $response['data']['results'] : []);
-
-            foreach ($terminals as $terminal) {
-
-                $app->terminal->delete($service['sid'], $terminal['tid']);
-            }
-
-            $app->service->delete($service['sid']);
-        }
     }
 }

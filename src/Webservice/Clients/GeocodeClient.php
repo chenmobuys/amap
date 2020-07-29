@@ -16,7 +16,7 @@ class GeocodeClient extends Client
      */
     public function geo($address, $batch = false, $city = null)
     {
-        $params = compact('address', 'batch', 'output', 'city', 'sig', 'callback');
+        $params = compact('address', 'batch', 'city');
 
         return $this->httpGet('v3/geocode/geo', $params);
     }
