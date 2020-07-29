@@ -92,7 +92,7 @@ class TrackApplicationTest extends TestCase
         $this->assertV1Response($response);
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         $app = Factory::track($this->getConfig());
         $response = $app->service->search();
