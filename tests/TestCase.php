@@ -9,27 +9,6 @@ class TestCase extends BaseTestCase
 {
     public function getConfig()
     {
-        return ['key' => 'xxxxxxxxxx'];
-    }
-
-    protected function assertV3Response($response)
-    {
-        $this->assertTrue(is_array($response));
-        $this->assertArrayHasKey('status', $response);
-        $this->assertNotEquals(1, $response['status']);
-    }
-
-    protected function assertV4Response($response)
-    {
-        $this->assertTrue(is_array($response));
-        $this->assertArrayHasKey('errcode', $response);
-        $this->assertNotEquals(0, $response['errcode']);
-    }
-
-    protected function assertV1Response($response)
-    {
-        $this->assertTrue(is_array($response));
-        $this->assertArrayHasKey('errcode', $response);
-        $this->assertNotEquals(10000, $response['errcode']);
+        return ['key' => 'xxxxxxxxxx', 'http' => ['timeout' => 10.0]];
     }
 }

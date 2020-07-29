@@ -5,11 +5,12 @@ namespace Chen\Amap\Tests\Applications;
 use Chen\Amap\Factory;
 use Chen\Amap\Tests\TestCase;
 use Chen\Amap\Track\Application;
+use RuntimeException;
 
 class TrackApplicationTest extends TestCase
 {
     /** @test */
-    public function makeTrackApplication()
+    public function application()
     {
         $app = Factory::track($this->getConfig());
         $this->assertEquals('Chen\\Amap\\Track\\Application', get_class($app));
@@ -18,83 +19,235 @@ class TrackApplicationTest extends TestCase
 
     /**
      * @test
-     * @depends makeTrackApplication
+     * @depends application
+     * @expectedException RuntimeException
+     * @param $app
+     */
+    public function serviceCreate($app)
+    {
+        $app->service->create('foo');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param $app
+     */
+    public function serviceUpdate($app)
+    {
+        $app->service->update('foo', 'bar');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function all_clients(Application $app)
+    public function serviceSearch(Application $app)
     {
-        $response = $app->service->search();
-        $services = (array)(isset($response['data']['results']) ? $response['data']['results'] : []);
-        foreach ($services as $service) {
-            $app->service->delete($service['sid']);
-        }
+        $app->service->search();
+    }
 
-        $response = $app->service->create('foo');
-        $this->assertV1Response($response);
-        $sid = 'xxxx';
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function serviceDelete(Application $app)
+    {
+        $app->service->delete('foo');
+    }
 
-        $response = $app->service->update($sid, 'bar');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalSearchTxt(Application $app)
+    {
+        $app->terminal_search->text('foo', 'bar');
+    }
 
-        $response = $app->service->search();
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalSearchAround(Application $app)
+    {
+        $app->terminal_search->around('foo', '39.89491,116.322056');
+    }
 
-        $response = $app->terminal_search->text($sid, '北京市');
-        $this->assertV1Response($response);
 
-        $response = $app->terminal_search->around($sid, '39.89491,116.322056');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalSearchPolygon(Application $app)
+    {
+        $app->terminal_search->polygon('foo', '116.298367,39.903931;116.354157,39.903009;116.356217,39.875745;116.282231,39.881936');
+    }
 
-        $response = $app->terminal_search->polygon($sid, '116.298367,39.903931;116.354157,39.903009;116.356217,39.875745;116.282231,39.881936');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalSearchDistrict(Application $app)
+    {
+        $app->terminal_search->district('foo', '北京市');
+    }
 
-        $response = $app->terminal_search->district($sid, '北京市');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalColumnCreate(Application $app)
+    {
+        $app->terminal_column->create('foo', 'foo', 'string');
+    }
 
-        $response = $app->terminal_column->create($sid, 'foo', 'string');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalColumnUpdate(Application $app)
+    {
+        $app->terminal_column->update('foo', 'foo', 'bar');
+    }
 
-        $response = $app->terminal_column->update($sid, 'foo', 'bar');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalColumnSearch(Application $app)
+    {
+        $app->terminal_column->search('foo');
+    }
 
-        $response = $app->terminal_column->search($sid);
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalColumnDelete(Application $app)
+    {
+        $app->terminal_column->delete('foo', 'bar');
+    }
 
-        $response = $app->terminal_column->delete($sid, 'bar');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalCreate(Application $app)
+    {
+        $app->terminal->create('foo', 'bar');
+    }
 
-        $response = $app->terminal->create($sid, 'foo');
-        $this->assertV1Response($response);
-        $tid = 'xxxx';
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalUpdate(Application $app)
+    {
+        $app->terminal->update('foo', 'foo', 'bar');
+    }
 
-        $response = $app->terminal->update($sid, $tid, 'bar');
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalSearch(Application $app)
+    {
+        $app->terminal->search('foo');
+    }
 
-        $response = $app->terminal->search($sid);
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalDelete(Application $app)
+    {
+        $app->terminal->delete('foo', 'foo');
+    }
 
-        $response = $app->trace->create($sid, $tid);
-        $this->assertV1Response($response);
-        $trid = 'xxxx';
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function traceCreate(Application $app)
+    {
+        $app->trace->create('foo', 'bar');
+    }
 
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function traceDelete(Application $app)
+    {
+        $app->trace->delete('foo', 'foo', 'bar');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function tracePointUpload(Application $app)
+    {
         // array( [errcode] => 20003 [errdetail] => 未知错误  [errmsg] => UNKNOWN_ERROR )
         $points = [["location" => "116.397428,39.90923", "locatetime" => 1544176895000, "speed" => 40, "direction" => 120, "height" => 39, "accuracy" => 20]];
-        $response = $app->trace->pointUpload($sid, $tid, $trid, $points);
-        $this->assertV1Response($response);
+        $app->trace->pointUpload('foo', 'foo', 'bar', $points);
+    }
 
-        $response = $app->terminal_monitor->lastpoint($sid, $tid, $trid);
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function terminalMonitorLastpoint(Application $app)
+    {
+        $app->terminal_monitor->lastpoint('foo', 'foo', 'bar');
+    }
 
-        $response = $app->grasproad->search($sid, $tid, $trid);
-        $this->assertV1Response($response);
-
-        $response = $app->trace->delete($sid, $tid, $trid);
-        $this->assertV1Response($response);
-
-        $response = $app->terminal->delete($sid, $tid);
-        $this->assertV1Response($response);
-
-        $response = $app->service->delete($sid);
-        $this->assertV1Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function grasproadSearch(Application $app)
+    {
+        $app->grasproad->search('foo', 'foo', 'bar');
     }
 }

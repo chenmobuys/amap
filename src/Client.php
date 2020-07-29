@@ -127,17 +127,17 @@ abstract class Client
 
         $content = (array)json_decode($response->getBody()->getContents(), true);
 
-        if (strpos($url, 'v1') && isset($content['errcode']) && $content['errcode'] != 10000) {
+        if (strpos($url, 'v1') !== false && isset($content['errcode']) && $content['errcode'] != 10000) {
 
-            throw new \RuntimeException($content['errmsg'] . ':' . $content['errdetail'], $content['errcode']);
+            throw new \RuntimeException($content['errmsg'], $content['errcode']);
 
-        } elseif (strpos($url, 'v3') && isset($content['status']) && $content['status'] != 1) {
+        } elseif (strpos($url, 'v3') !== false && isset($content['status']) && $content['status'] != 1) {
 
             throw new \RuntimeException($content['info'], $content['status']);
 
-        } elseif (strpos($url, 'v4') && isset($content['errcode']) && $content['errcode'] != 0) {
+        } elseif (strpos($url, 'v4') !== false && isset($content['errcode']) && $content['errcode'] != 0) {
 
-            throw new \RuntimeException($content['errmsg'] . ':' . $content['errdetail'], $content['errcode']);
+            throw new \RuntimeException($content['errmsg'], $content['errcode']);
 
         } elseif ($content == '') {
 

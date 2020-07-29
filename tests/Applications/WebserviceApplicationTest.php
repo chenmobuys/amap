@@ -5,11 +5,12 @@ namespace Chen\Amap\Tests\Applications;
 use Chen\Amap\Factory;
 use Chen\Amap\Tests\TestCase;
 use Chen\Amap\Webservice\Application;
+use RuntimeException;
 
 class WebserviceApplicationTest extends TestCase
 {
     /** @test */
-    public function makeWebServiceApplication()
+    public function application()
     {
         $app = Factory::webservice($this->getConfig());
         $this->assertEquals('Chen\\Amap\\Webservice\\Application', get_class($app));
@@ -18,96 +19,214 @@ class WebserviceApplicationTest extends TestCase
 
     /**
      * @test
-     * @depends makeWebServiceApplication
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function base_client(Application $app)
+    public function baseDistrict(Application $app)
     {
-        $response = $app->base->district(1, 1, 20, 'base', '北京市');
-        $this->assertV3Response($response);
-
-        $response = $app->base->inputtips('北京市');
-        $this->assertV3Response($response);
-
-        $response = $app->base->convert('116.322056,39.89491');
-        $this->assertV3Response($response);
-
-        $response = $app->base->ip('127.0.0.1');
-        $this->assertV3Response($response);
+        $app->base->district(1, 1, 20, 'base', '北京市');
     }
 
     /**
      * @test
-     * @depends makeWebServiceApplication
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function direction_client(Application $app)
+    public function baseInputips(Application $app)
     {
-        $response = $app->direction->walking('116.322056,39.89491', '116.426769,39.902219');
-        $this->assertV3Response($response);
-
-        $response = $app->direction->transit('116.322056,39.89491', '116.426769,39.902219', '北京市');
-        $this->assertV3Response($response);
-
-        $response = $app->direction->driving('116.322056,39.89491', '116.426769,39.902219');
-        $this->assertV3Response($response);
-
-        $response = $app->direction->bicycling('116.322056,39.89491', '116.426769,39.902219');
-        $this->assertV4Response($response);
-
-        $response = $app->direction->truck('116.322056,39.89491', '116.426769,39.902219', 1);
-        $this->assertV4Response($response);
-
-        $response = $app->direction->distance('116.322056,39.89491', '116.426769,39.902219', 1);
-        $this->assertV3Response($response);
+        $app->base->inputtips('北京市');
     }
 
     /**
      * @test
-     * @depends makeWebServiceApplication
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function geocode_client(Application $app)
+    public function baseConvert(Application $app)
     {
-        $response = $app->geocode->geo('北京市');
-        $this->assertV3Response($response);
+        $app->base->convert('116.322056,39.89491');
+    }
 
-        $response = $app->geocode->regeo('116.407526,39.904030');
-        $this->assertV3Response($response);
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function baseIp(Application $app)
+    {
+        $app->base->ip('127.0.0.1');
     }
 
     /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function geofence_client(Application $app)
+    public function directionWalking(Application $app)
     {
-        $response = $app->geofence->create('北京市', '116.407526,39.904030', 5000, null, null, 'Mon');
-        $this->assertV4Response($response);
-        $gid = $response['data']['gid'];
+        $app->direction->walking('116.322056,39.89491', '116.426769,39.902219');
+    }
 
-        $response = $app->geofence->search();
-        $this->assertV4Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function directionTransit(Application $app)
+    {
+        $app->direction->transit('116.322056,39.89491', '116.426769,39.902219', '北京市');
+    }
 
-        $response = $app->geofence->update($gid, '北京市测试', '116.407526,39.904030', 5000, null, null, 'Mon');
-        $this->assertV4Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function directionDriving(Application $app)
+    {
+        $app->direction->driving('116.322056,39.89491', '116.426769,39.902219');
+    }
 
-        $response = $app->geofence->enable($gid);
-        $this->assertV4Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function directionBicycling(Application $app)
+    {
+        $app->direction->bicycling('116.322056,39.89491', '116.426769,39.902219');
+    }
 
-        $response = $app->geofence->status('XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', '116.407526,39.904030,1577808000');
-        $this->assertV4Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function directionTrunck(Application $app)
+    {
+        $app->direction->truck('116.322056,39.89491', '116.426769,39.902219', 1);
+    }
 
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function directionDistance(Application $app)
+    {
+        $app->direction->distance('116.322056,39.89491', '116.426769,39.902219', 1);
+    }
+
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geocodeGeo(Application $app)
+    {
+        $app->geocode->geo('北京市');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geocodeRegeo(Application $app)
+    {
+        $app->geocode->regeo('116.407526,39.904030');
+
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geofenceCreate(Application $app)
+    {
+        $app->geofence->create('北京市', '116.407526,39.904030', 5000, null, null, 'Mon');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geofenceSearch(Application $app)
+    {
+        $app->geofence->search();
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function genfenceUpdate(Application $app)
+    {
+        $app->geofence->update('foo', '北京市测试', '116.407526,39.904030', 5000, null, null, 'Mon');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geofenceEnable(Application $app)
+    {
+        $app->geofence->enable('foo');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geofenceStatus(Application $app)
+    {
+        $app->geofence->status('XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', '116.407526,39.904030,1577808000');
+    }
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function geofenceDelete(Application $app)
+    {
         // 未知错误
-        $response = $app->geofence->delete($gid);
-        $this->assertV4Response($response);
+        $app->geofence->delete('foo');
     }
+
 
     /**
      * @test
-     * @depends makeWebServiceApplication
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function grasproad_client(Application $app)
+    public function grasproadDriving(Application $app)
     {
         $params = [
             ["x" => 116.449429, "y" => 40.014844, "sp" => 4, "ag" => 110, "tm" => 1478831753],
@@ -117,39 +236,64 @@ class WebserviceApplicationTest extends TestCase
             ["x" => 116.450273, "y" => 40.014598, "sp" => 3, "ag" => 111, "tm" => 20]
         ];
 
-        $response = $app->grasproad->driving($params);
-        $this->assertV4Response($response);
+        $app->grasproad->driving($params);
+
     }
 
     /**
      * @test
-     * @depends makeWebServiceApplication
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function search_client(Application $app)
+    public function searchText(Application $app)
     {
-        $response = $app->search->text('北京市');
-        $this->assertV3Response($response);
+        $app->search->text('北京市');
+    }
 
-        $response = $app->search->around('116.322056,39.89491', '大学');
-        $this->assertV3Response($response);
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function searchAround(Application $app)
+    {
+        $app->search->around('116.322056,39.89491', '大学');
+    }
 
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function searchPolygon(Application $app)
+    {
         // 未知错误
-        $response = $app->search->polygon('116.322056,39.89491');
-        $this->assertV3Response($response);
-
-        $response = $app->search->detail('B0FFFAB6J2');
-        $this->assertV3Response($response);
+        $app->search->polygon('116.322056,39.89491');
     }
 
     /**
      * @test
-     * @depends makeWebServiceApplication
+     * @depends application
+     * @expectedException RuntimeException
      * @param Application $app
      */
-    public function weather_client(Application $app)
+    public function searchDetail(Application $app)
     {
-        $response = $app->weather->weatherInfo('北京市');
-        $this->assertV3Response($response);
+        $app->search->detail('B0FFFAB6J2');
+    }
+
+
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function weatherWeatherInfo(Application $app)
+    {
+        $app->weather->weatherInfo('北京市');
     }
 }
