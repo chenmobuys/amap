@@ -50,6 +50,16 @@ class WebserviceApplicationTest extends TestCase
         $app->base->convert('116.322056,39.89491');
     }
 
+    /**
+     * @test
+     * @depends application
+     * @expectedException RuntimeException
+     * @param Application $app
+     */
+    public function baseStaticmap(Application $app)
+    {
+        $app->base->staticmap('foo');
+    }
 
     /**
      * @test
