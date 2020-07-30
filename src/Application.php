@@ -60,6 +60,10 @@ abstract class Application extends Container
                     CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
                 ]
             ],
+            // 秘钥
+            'key' => '',
+            // 数字签名
+            'sig' => '',
         ];
 
         $config = array_replace_recursive($base, $this->defaultConfig, $this->userConfig);

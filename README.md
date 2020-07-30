@@ -24,7 +24,12 @@ composer require "chen/amap:^0.1" -vvv
 
 use Chen\Amap\Factory;
 
-$config = ['key' => 'xxxxxxxxxxxxxxxxxxxxx'];
+$config = [
+    // 地图秘钥
+    'key' => 'xxxxxxxxxxxxxxxxxxxxx',
+    // 数字签名，缺省则不使用秘钥
+    'sig' => 'xxxxxxxxxxxxxxx'
+];
 
 // Web服务
 $webservice = Factory::webservice($config);
@@ -34,7 +39,7 @@ $response = $webservice->geocode->geo('北京市');
 $response = $webservice->geocode->regeo('116.322056,39.89491');
 
 // 猎鹰服务
-$track = Factoy::track($config);
+$track = Factory::track($config);
 
 // ... 接口具体用法，查看官方文档
 ```

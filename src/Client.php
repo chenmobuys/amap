@@ -122,6 +122,7 @@ abstract class Client
         $options = array_merge($this->getRequestDefaultOptions(), $options);
 
         $options['query']['key'] = $this->app->getConfig('key');
+        $options['query']['sig'] = $this->app->getConfig('sig');
 
         $response = $this->getHttpClient()->request($method, $url, $options);
 
