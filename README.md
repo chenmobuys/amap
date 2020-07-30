@@ -36,7 +36,7 @@ $response = $webservice->geocode->regeo('116.322056,39.89491');
 // 猎鹰服务
 $track = Factoy::track($config);
 
-... 接口具体用法，查看官方文档
+// ... 接口具体用法，查看官方文档
 ```
 
 ## 官方文档地址
